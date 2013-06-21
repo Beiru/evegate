@@ -20,6 +20,6 @@ Usage:
 Real life example
 =====
 
-if You can't host this script on your server, feel free to use this:
+if You can't host Your own copy of this software elsewhere, feel free to use this:
 
 http://ash-alliance.eu/evegate.php
