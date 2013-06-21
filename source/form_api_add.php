@@ -124,7 +124,7 @@ if ($_POST['mode'] == 'login')
             margin-right: 40%;
             margin-top: 8px;
         }
-        </style>
+    </style>
 </head>
 <body>
 <div class="container">
@@ -151,8 +151,7 @@ if ($_POST['mode'] == 'login')
             <form method="post" action="">
                 <label>Key ID<input type="text" name="keyid" class="edit"/></label>
                 <label>Verification Code<input type="text" name="vcode" class="edit"/></label>
-                <label><input type="submit" style="text-align: center; width: 120px; padding: 2px"
-                              value="Submit"/></label>
+                <label><input type="submit" class="btn" value="Submit"/></label>
                 <input type="hidden" name="mode" value="login"/>
             </form>
 
@@ -215,7 +214,7 @@ if ($_POST['mode'] == 'login')
                 }
                 ?>
                 <input type="hidden" name="mode" value="config"/>
-                <label><input type="submit" alue="Submit"/></label>
+                <label><input type="submit" value="Submit" class="btn"/></label>
             </form>
             <br/>
             <br/>
@@ -227,7 +226,7 @@ if ($_POST['mode'] == 'login')
             ?>
             <form method="post" action="">
                 <input type="hidden" name="mode" value="logout"/>
-                <input type="submit" value="Exit and logout"/>
+                <input type="submit" class="btn" value="Exit and logout"/>
             </form>
         <?
         }
