@@ -98,35 +98,8 @@ if ($_POST['mode'] == 'login')
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <style>
-        form {
-            display: block;
-        }
-
-        form label {
-            min-width: 280px;
-            width: 66%;
-            line-height: 24px;
-            height: 25px;
-            display: block;
-            padding: 5px 0;
-            clear: both;
-            position: relative;
-
-        }
-
-        form label input {
-            float: right;
-            width: 40%;
-        }
-
-        form label input[type='checkbox'] {
-            float: right;
-            margin-right: 40%;
-            margin-top: 8px;
-        }
-    </style>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
 </head>
 <body>
 <div class="container">
