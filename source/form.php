@@ -110,7 +110,7 @@ if ($_POST['mode'] == 'login')
         if ($_SESSION['evegate']['loggedin'] <> 1)
         {
             ?>
-            <h2><a id="login" name="login">Login or Register</a></h2>
+            <h2>Login or Register</h2>
             <p>
                 If You want to register, create predefined <a
                     href="https://support.eveonline.com/api/Key/CreatePredefined/52736"
@@ -141,10 +141,10 @@ if ($_POST['mode'] == 'login')
             $characterNAME = getUserNameByID($characterID);
             ?>
 
-            <H2>Welcome back <?
+            <h2>Welcome back <?
                 echo $_SESSION['evegate'][0]['username'];
 
-                ?></H2>
+                ?></h2>
 
             <form method="post" action="">
                 <label>Key ID: <?= $_SESSION['evegate'][0]['key_id'] ?></label>
@@ -153,7 +153,7 @@ if ($_POST['mode'] == 'login')
                                              value="<?= $_SESSION['evegate'][0]['forward_mail'] ?>"
                                              class="edit"/></label>
 
-                <h2>Filters (message types You want to exclude) </h2>
+                <h3>Filters (message types You want to exclude) </h3>
 
                 <label>Sent folder: <input type="checkbox"
                                            name="fromsent" <? is_checked('fromsent', $_SESSION['evegate'][0]['filters']); ?>
@@ -165,7 +165,7 @@ if ($_POST['mode'] == 'login')
                                          name="fromally" <? is_checked('fromally', $_SESSION['evegate'][0]['filters']); ?>
                                          class="edit" value="1"/></label>
 
-                <h2>Mailing lists</h2>
+                <h3>Mailing lists</h3>
 
                 <?
                 $url = 'https://api.eveonline.com/char/mailinglists.xml.aspx?characterID=' . $characterID . '&keyID=' . $_SESSION['evegate'][0]['key_id'] . '&vCode=' . $_SESSION['evegate'][0]['v_code'];
