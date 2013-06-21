@@ -54,7 +54,7 @@ foreach ($api_keys_array as $single_key)
     $xml_array2  = object2array($xml_object2);
 
 
-    if (count($xml_array2["result"]["rowset"]["row"]) && is_array($xml_array2["result"]["rowset"]["row"]))
+    if (isset($xml_array2["result"]["rowset"]["row"]) && count($xml_array2["result"]["rowset"]["row"]) && is_array($xml_array2["result"]["rowset"]["row"]))
     {
         foreach ($xml_array2["result"]["rowset"]["row"] as $mailitem)
         {
@@ -179,7 +179,7 @@ foreach ($api_keys_array as $single_key)
                 //if there was no filter conditions met - send it
                 if (!$no_send)
                 {
-                    SendMail("$characterNAME<$forwardmail>", getUserNameByID($mail["senderID"]) . "<{$from_mail}>", $mail_title, $mail_body);
+                    SendMail("\"{$characterNAME}\"<{$forwardmail}>", '"' . getUserNameByID($mail["senderID"]) . '"' . "<{$from_mail}>", $mail_title, $mail_body);
                 }
 
             }

@@ -7,7 +7,6 @@
  *
  *
  */
-
 session_start();
 
 include('include/db.php');
@@ -94,119 +93,150 @@ if ($_POST['mode'] == 'login')
 // process post requests - end
 
 ?>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style>
+        form {
+            display: block;
+        }
+
+        form label {
+            min-width: 280px;
+            width: 66%;
+            line-height: 24px;
+            height: 25px;
+            display: block;
+            padding: 5px 0;
+            clear: both;
+            position: relative;
+
+        }
+        form label input{
+            float: right;
+            width: 40%;
+        }
+        form label input[type='checkbox']{
+            float: right;
+            margin-right: 40%;
+            margin-top: 8px;
+        }
+        </style>
 </head>
 <body>
-<h2>Forwarding configuration</h2>
-<?php
+<div class="container">
+    <div class="row">
+        <?php
 
-// login / register form
-if ($_SESSION['evegate']['loggedin'] <> 1)
-{
-    ?>
-    <p>
-        If You want to register, create predefined <a
-            href="https://support.eveonline.com/api/Key/CreatePredefined/52736"
-            target="new" rel="nofollow">API key</a>, for exactly one character (not for account!).<br/>
-        In next step, set Your real E-mail address. That's all.
-    </p>
-
-    <p>
-        For managing simply use the same api key/vCode pair to login.
-    </p>
-
-    <h2><a id="login" name="login">Login or Register</a></h2>
-
-    <form method="post" action="">
-        <label>Key ID<input type="text" name="keyid" class="edit"/></label>
-        <label>Verification Code<input type="text" name="vcode" class="edit"/></label>
-        <label><input type="submit" style="text-align: center; width: 120px; padding: 2px"
-                      value="Submit"/></label>
-        <input type="hidden" name="mode" value="login"/>
-    </form>
-
-<?
-}
-else // api configure form
-{
-    $url        = 'https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=' . $_SESSION['evegate'][0]['key_id'] . '&vCode=' . $_SESSION['evegate'][0]['v_code'];
-    $xml_object = simplexml_load_string(file_get_contents($url));
-    $xml_array  = object2array($xml_object);
-
-    $characterID   = $xml_array["result"]["key"]["rowset"]["row"]["@attributes"]["characterID"];
-    $characterNAME = getUserNameByID($characterID);
-    ?>
-
-    <H1>Welcome back <?
-        echo $_SESSION['evegate'][0]['username'];
-
-        ?></H1>
-    <form method="post" action="">
-        <label>Key ID: <?= $_SESSION['evegate'][0]['key_id'] ?></label>
-        <label>Verification Code: <?= substr($_SESSION['evegate'][0]['v_code'], 0, 16) ?>...</label>
-        <label>email address: <input type="text" name="email" value="<?= $_SESSION['evegate'][0]['forward_mail'] ?>"
-                                     class="edit"/></label>
-        <?
-        if (!$_SESSION['evegate'][0]['forward_mail'])
+        // login / register form
+        if ($_SESSION['evegate']['loggedin'] <> 1)
         {
-            echo "Write here Your email address.";
-        }
-        ?>
-
-        <h2>Filters (message types You want to exclude) </h2>
-
-        <label>Sent folder: <input type="checkbox"
-                                   name="fromsent" <? is_checked('fromsent', $_SESSION['evegate'][0]['filters']); ?>
-                                   class="edit" value="1"/></label>
-        <label>From Corp: <input type="checkbox"
-                                 name="fromcorp" <? is_checked('fromcorp', $_SESSION['evegate'][0]['filters']); ?>
-                                 class="edit" value="1"/></label>
-        <label>From Ally: <input type="checkbox"
-                                 name="fromally" <? is_checked('fromally', $_SESSION['evegate'][0]['filters']); ?>
-                                 class="edit" value="1"/></label>
-
-        <h2>Mailing lists *</h2>
-
-        <?
-        $url = 'https://api.eveonline.com/char/mailinglists.xml.aspx?characterID=' . $characterID . '&keyID=' . $_SESSION['evegate'][0]['key_id'] . '&vCode=' . $_SESSION['evegate'][0]['v_code'];
-        $xml_object = simplexml_load_string(file_get_contents($url));
-        $xml_array = object2array($xml_object);
-        foreach ($xml_array["result"]["rowset"]["row"] as $lrow)
-        {
-            $lid   = $lrow['@attributes']['listID'];
-            $lname = $lrow['@attributes']['displayName'];
             ?>
-            <label><?= $lname ?>: <input type="checkbox"
-                                         name="sub_<?= $lid ?>" <? is_checked($lid, $_SESSION['evegate'][0]['filters']); ?>
+            <h2><a id="login" name="login">Login or Register</a></h2>
+            <p>
+                If You want to register, create predefined <a
+                    href="https://support.eveonline.com/api/Key/CreatePredefined/52736"
+                    target="new" rel="nofollow">API key</a>, for exactly one character (not for account!).<br/>
+                In next step, set Your real E-mail address. That's all.
+            </p>
+
+            <p>
+                For managing simply use the same api key/vCode pair to login.
+            </p>
+
+
+            <form method="post" action="">
+                <label>Key ID<input type="text" name="keyid" class="edit"/></label>
+                <label>Verification Code<input type="text" name="vcode" class="edit"/></label>
+                <label><input type="submit" style="text-align: center; width: 120px; padding: 2px"
+                              value="Submit"/></label>
+                <input type="hidden" name="mode" value="login"/>
+            </form>
+
+        <?
+        }
+        else // api configure form
+        {
+            $url        = 'https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=' . $_SESSION['evegate'][0]['key_id'] . '&vCode=' . $_SESSION['evegate'][0]['v_code'];
+            $xml_object = simplexml_load_string(file_get_contents($url));
+            $xml_array  = object2array($xml_object);
+
+            $characterID   = $xml_array["result"]["key"]["rowset"]["row"]["@attributes"]["characterID"];
+            $characterNAME = getUserNameByID($characterID);
+            ?>
+
+            <H1>Welcome back <?
+                echo $_SESSION['evegate'][0]['username'];
+
+                ?></H1>
+            <form method="post" action="">
+                <label>Key ID: <?= $_SESSION['evegate'][0]['key_id'] ?></label>
+                <label>Verification Code: <?= substr($_SESSION['evegate'][0]['v_code'], 0, 16) ?>...</label>
+                <label>email address: <input type="text" name="email"
+                                             value="<?= $_SESSION['evegate'][0]['forward_mail'] ?>"
+                                             class="edit"/></label>
+                <?
+                if (!$_SESSION['evegate'][0]['forward_mail'])
+                {
+                    echo "Write here Your email address.";
+                }
+                ?>
+
+                <h2>Filters (message types You want to exclude) </h2>
+
+                <label>Sent folder: <input type="checkbox"
+                                           name="fromsent" <? is_checked('fromsent', $_SESSION['evegate'][0]['filters']); ?>
+                                           class="edit" value="1"/></label>
+                <label>From Corp: <input type="checkbox"
+                                         name="fromcorp" <? is_checked('fromcorp', $_SESSION['evegate'][0]['filters']); ?>
                                          class="edit" value="1"/></label>
+                <label>From Ally: <input type="checkbox"
+                                         name="fromally" <? is_checked('fromally', $_SESSION['evegate'][0]['filters']); ?>
+                                         class="edit" value="1"/></label>
+
+                <h2>Mailing lists</h2>
+
+                <?
+                $url = 'https://api.eveonline.com/char/mailinglists.xml.aspx?characterID=' . $characterID . '&keyID=' . $_SESSION['evegate'][0]['key_id'] . '&vCode=' . $_SESSION['evegate'][0]['v_code'];
+                $xml_object = simplexml_load_string(file_get_contents($url));
+                $xml_array = object2array($xml_object);
+                foreach ($xml_array["result"]["rowset"]["row"] as $lrow)
+                {
+                    $lid   = $lrow['@attributes']['listID'];
+                    $lname = $lrow['@attributes']['displayName'];
+                    ?>
+                    <label><?= $lname ?>: <input type="checkbox"
+                                                 name="sub_<?= $lid ?>" <? is_checked($lid, $_SESSION['evegate'][0]['filters']); ?>
+                                                 class="edit" value="1"/></label>
+                <?
+                }
+                ?>
+                <input type="hidden" name="mode" value="config"/>
+                <label><input type="submit" alue="Submit"/></label>
+            </form>
+            <br/>
+            <br/>
+            <br/>
+            <hr/>
+
+            <?
+            // logout button
+            ?>
+            <form method="post" action="">
+                <input type="hidden" name="mode" value="logout"/>
+                <input type="submit" value="Exit and logout"/>
+            </form>
         <?
         }
         ?>
-        <input type="hidden" name="mode" value="config"/>
-        <label><input type="submit" alue="Submit"/></label>
-    </form>
-    <br/>
-    <br/>
-    <br/>
-    <hr/>
-
-    <?
-    // logout button
-    ?>
-    <form method="post" action="">
-        <input type="hidden" name="mode" value="logout"/>
-        <input type="submit" value="Exit and logout"/>
-    </form>
-<?
-}
-?>
-<br/>
-<br/>
-
+        <br/>
+        <br/>
+    </div>
+</div>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

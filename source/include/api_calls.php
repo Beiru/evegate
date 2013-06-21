@@ -12,7 +12,7 @@ function object2array($object)
 
 function getUserNameByID($id)
 {
-    if (!$GLOBALS['user'][$id])
+    if (!isset($GLOBALS['user'][$id]))
     {
         $GLOBALS['user'][$id] = GetValue("SELECT `character_name` FROM `user_names` WHERE `character_id`=" . $id);
         if ($GLOBALS['user'][$id] == '')
