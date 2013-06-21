@@ -115,11 +115,13 @@ if ($_POST['mode'] == 'login')
             position: relative;
 
         }
-        form label input{
+
+        form label input {
             float: right;
             width: 40%;
         }
-        form label input[type='checkbox']{
+
+        form label input[type='checkbox'] {
             float: right;
             margin-right: 40%;
             margin-top: 8px;
@@ -147,7 +149,6 @@ if ($_POST['mode'] == 'login')
                 For managing simply use the same api key/vCode pair to login.
             </p>
 
-
             <form method="post" action="">
                 <label>Key ID<input type="text" name="keyid" class="edit"/></label>
                 <label>Verification Code<input type="text" name="vcode" class="edit"/></label>
@@ -167,22 +168,17 @@ if ($_POST['mode'] == 'login')
             $characterNAME = getUserNameByID($characterID);
             ?>
 
-            <H1>Welcome back <?
+            <H2>Welcome back <?
                 echo $_SESSION['evegate'][0]['username'];
 
-                ?></H1>
+                ?></H2>
+
             <form method="post" action="">
                 <label>Key ID: <?= $_SESSION['evegate'][0]['key_id'] ?></label>
                 <label>Verification Code: <?= substr($_SESSION['evegate'][0]['v_code'], 0, 16) ?>...</label>
-                <label>email address: <input type="text" name="email"
+                <label>email address: <input type="text" name="email" placeholder="Your e-mail address"
                                              value="<?= $_SESSION['evegate'][0]['forward_mail'] ?>"
                                              class="edit"/></label>
-                <?
-                if (!$_SESSION['evegate'][0]['forward_mail'])
-                {
-                    echo "Write here Your email address.";
-                }
-                ?>
 
                 <h2>Filters (message types You want to exclude) </h2>
 
