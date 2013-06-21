@@ -8,6 +8,7 @@
  *
  */
 
+session_start();
 
 include('include/db.php');
 include('include/api_calls.php');
@@ -31,23 +32,22 @@ if ($_POST['mode'] == 'config')
     $data                 = array();
     $data['forward_mail'] = mysql_real_escape_string($_POST['email']);
 
-    if (strtotime($api_key['premium']) > time())
+
+    $filters['fromsent'] = $_POST['fromsent'];
+    $filters['fromcorp'] = $_POST['fromcorp'];
+    $filters['fromally'] = $_POST['fromally'];
+
+    foreach ($_POST as $pk => $pw)
     {
-        $filters['fromsent'] = $_POST['fromsent'];
-        $filters['fromcorp'] = $_POST['fromcorp'];
-        $filters['fromally'] = $_POST['fromally'];
-
-        foreach ($_POST as $pk => $pw)
+        if (substr($pk, 0, 4) == 'sub_')
         {
-            if (substr($pk, 0, 4) == 'sub_')
-            {
-                $lid           = substr($pk, 4);
-                $filters[$lid] = 1;
-            }
+            $lid           = substr($pk, 4);
+            $filters[$lid] = 1;
         }
-
-        $data['filters'] = serialize($filters);
     }
+
+    $data['filters'] = serialize($filters);
+
 
     UpdateData($data, 'api_keys', $condition);
 
